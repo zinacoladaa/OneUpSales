@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { calculateCommission } from "../utils/CommissionBand";
+import "../index.css"; 
 
 const CommissionWidget: React.FC = () => {
   const [revenueInput, setRevenueInput] = useState<string>("");
@@ -9,7 +10,7 @@ const CommissionWidget: React.FC = () => {
 
   return (
     <div className="p-4 bg-white rounded-xl">
-      <h2 className="text-xl font-semibold ">Commission Calculator</h2>
+      <h2 className="text-xl font-semibold text-red ">Commission Calculator</h2>
       <label>Revenue</label>
       <input
         type="number"
