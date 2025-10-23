@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { calculateCommission } from "../utils/CommissionBand";
 
 const CommissionWidget: React.FC = () => {
-  const [revenue, setRevenue] = useState<number>(0);
+const [revenue, setRevenue] = useState<number>(0);
 const { totalCommission, breakdown } = calculateCommission(revenue);
 
   return (
@@ -13,19 +13,22 @@ const { totalCommission, breakdown } = calculateCommission(revenue);
         type="number"
         value={revenue}
         onChange={(e) => setRevenue(Number(e.target.value))}
-        className="border px-2 py-1 w-full mt-1"
-        placeholder='Enter Total Revenue'
       />
 
-        <p className="text-lg font-semibold mb-2">
+      <p className="text-lg font-semibold mb-2">
         Total Commission: £{totalCommission.toLocaleString()}
       </p>
+
+      <h3 className="font-medium mb-1">Commission Band Breakdown</h3>
+      <ul className="space-y-1">
+        {breakdown.map((b, i) => (
+          <li key={i} className="flex justify-between">
+            <span>{b.band}</span>
+            <span>£{b.commission.toLocaleString()}</span>
+          </li>
+        ))}
+      </ul>
     </div>
-
-  
-
-
-    
   );
 };
 
