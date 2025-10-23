@@ -4,6 +4,7 @@ export type CommissionBand = {
   rate: number;
 };
 
+// commission bands
 export const commissionBands: CommissionBand[] = [
   { min: 0, max: 5000, rate: 0 },
   { min: 5000, max: 10000, rate: 0.1 },
@@ -12,16 +13,20 @@ export const commissionBands: CommissionBand[] = [
   { min: 20000, max: null, rate: 0.25 },
 ];
 
+// calculate total commission & breakdown by band
 export function calculateCommission(revenue: number) {
   let totalCommission = 0;
   const breakdown: { band: string; commission: number }[] = [];
 
   for (const band of commissionBands) {
     const bandMax = band.max ?? Infinity;
+
     const amountInBand = Math.min(
+      //calculate how much of the revenue falls within this band
       Math.max(revenue - band.min, 0),
       bandMax - band.min
     );
+    //commision calculation
     const commission = amountInBand * band.rate;
 
     breakdown.push({
