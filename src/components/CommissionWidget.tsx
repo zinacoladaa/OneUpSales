@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { calculateCommission } from "../utils/CommissionBand";
 
 const CommissionWidget: React.FC = () => {
-const [revenue, setRevenue] = useState<number>(0);
-const { totalCommission, breakdown } = calculateCommission(revenue);
+  const [revenueInput, setRevenueInput] = useState<string>("");
+
+  const revenue = Number(revenueInput) || 0;
+  const { totalCommission, breakdown } = calculateCommission(revenue);
 
   return (
     <div className="p-4 bg-white rounded-xl">
@@ -11,25 +13,29 @@ const { totalCommission, breakdown } = calculateCommission(revenue);
       <label>Revenue</label>
       <input
         type="number"
-        value={revenue}
-        onChange={(e) => setRevenue(Number(e.target.value))}
+        value={revenueInput}
+        onChange={(e) => setRevenueInput(e.target.value)}
       />
 
-      <p className="text-lg font-semibold mb-2">
-        Total Commission: £{totalCommission.toLocaleString()}
-      </p>
+      {revenueInput && (
+        <>
+          <p className="text-lg font-semibold mb-2">
+            Total Commission: £{totalCommission.toLocaleString()}
+          </p>
+          <span className="text-red">£{totalCommission.toLocaleString()}</span>
 
-      <h3 className="font-medium mb-1">Commission Band Breakdown</h3>
-      <ul className="space-y-1">
-        {breakdown.map((b, i) => (
-          <li key={i} className="flex justify-between">
-            <span>{b.band}</span>
-            <span>£{b.commission.toLocaleString()}</span>
-          </li>
-        ))}
-      </ul>
+          <h3 className="font-medium mb-1">Commission Band Breakdown</h3>
+          <ul className="space-y-1">
+            {breakdown.map((b, i) => (
+              <li key={i} className="flex justify-between">
+                <span>{b.band}</span>
+                <span>£{b.commission.toLocaleString()}</span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </div>
   );
 };
-
 export default CommissionWidget;
